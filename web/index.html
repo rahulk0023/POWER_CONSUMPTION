@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Process Power Analytics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background: #0078D7;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Process-Level Power Consumption (via API)</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Process</th>
+            <th>CPU (%)</th>
+            <th>Memory (MB)</th>
+            <th>Power (W)</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody id="data-body">
+        <tr><td colspan="5">Loading data...</td></tr>
+    </tbody>
+</table>
+
+<script>
+fetch("http://127.0.0.1:5000/metrics")
+    .then(response => response.json())
+    .then(data => {
+        const body = document.getElementById("data-body");
+        body.innerHTML = "";
+
+        data.forEach(item => {
+            const row = `
+                <tr>
+                    <td>${item.process}</td>
+                    <td>${item.cpu}</td>
+                    <td>${item.memory}</td>
+                    <td>${item.power}</td>
+                    <td>${item.timestamp}</td>
+                </tr>
+            `;
+            body.innerHTML += row;
+        });
+    })
+    .catch(err => {
+        document.getElementById("data-body").innerHTML =
+            "<tr><td colspan='5'>Failed to load data</td></tr>";
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "poll_interval_sec": 0.2, 
+  "top_n": 6,
+  "disk_to_monitor": "C:\\", 
+  "estimation_coeffs": {
+    "cpu_w_per_100pct": 200.0,  
+    "mem_w_per_gb": 2.0,
+    "io_w_per_mb_s": 1.5
+  },
+  "anomaly": {
+    "relative_threshold_pct": 0.8, 
+    "zscore_threshold": 1.5,      
+    "ema_alpha": 0.01,            
+    "min_samples_for_baseline": 5
+  },
+  "ignored_processes": [
+    "psutil-server.exe", 
+    "svchost.exe", 
+    "System"
+  ]
+}
